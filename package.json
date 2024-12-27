@@ -1,10 +1,22 @@
 {
-  "name": "${PROJECT_NAME}",
+  "name": "yelp-fusion-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
+  "dependencies": {
+    "caseless": "^0.11.0",
+    "cors": "^2.8.5",
+    "error": "^7.2.1",
+    "express": "^4.21.2",
+    "request-function": "^2.0.0",
+    "small-request": "^2.1.0",
+    "string-template": "^1.0.0",
+    "yelp-fusion": "^3.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "private": true
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

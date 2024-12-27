@@ -1,10 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yelp Web App</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .result { margin-top: 20px; }
+    </style>
 </head>
 <body>
-$END$
+<h1>Yelp Web App</h1>
+
+<!-- Business Search -->
+<h2>Search Businesses</h2>
+<input type="text" id="search-term" placeholder="Search term">
+<input type="text" id="search-location" placeholder="Location">
+<button onclick="searchBusinesses()">Search</button>
+<div id="search-results" class="result"></div>
+
+<!-- Business Details -->
+<h2>Business Details</h2>
+<input type="text" id="business-id" placeholder="Business ID">
+<button onclick="getBusinessDetails()">Get Details</button>
+<div id="business-details" class="result"></div>
+
+<!-- Reviews -->
+<h2>Business Reviews</h2>
+<input type="text" id="review-id" placeholder="Business ID">
+<button onclick="getReviews()">Get Reviews</button>
+<div id="reviews" class="result"></div>
+
+<!-- Autocomplete -->
+<h2>Autocomplete</h2>
+<input type="text" id="autocomplete-text" placeholder="Start typing...">
+<button onclick="getAutocomplete()">Autocomplete</button>
+<div id="autocomplete-results" class="result"></div>
+
+<!-- Business Match -->
+<h2>Business Match</h2>
+<input type="text" id="match-name" placeholder="Business Name">
+<input type="text" id="match-address" placeholder="Address">
+<input type="text" id="match-city" placeholder="City">
+<input type="text" id="match-state" placeholder="State">
+<input type="text" id="match-country" placeholder="Country">
+<button onclick="getBusinessMatch()">Match</button>
+<div id="match-results" class="result"></div>
+
+<script>
+    const API_BASE = 'http://localhost:3000';
+
+    async function searchBusinesses() {
+        const term = document.getElementById('search-term').value;
+        const location = document.getElementById('search-location').value;
+        const res = await fetch(`${API_BASE}/search?term=${term}&location=${location}`);
+        const data = await res.json();
+        document.getElementById('search-results').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function getBusinessDetails() {
+        const id = document.getElementById('business-id').value;
+        const res = await fetch(`${API_BASE}/business/${id}`);
+        const data = await res.json();
+        document.getElementById('business-details').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function getReviews() {
+        const id = document.getElementById('review-id').value;
+        const res = await fetch(`${API_BASE}/business/${id}/reviews`);
+        const data = await res.json();
+        document.getElementById('reviews').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function getAutocomplete() {
+        const text = document.getElementById('autocomplete-text').value;
+        const res = await fetch(`${API_BASE}/autocomplete?text=${text}`);
+        const data = await res.json();
+        document.getElementById('autocomplete-results').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function getBusinessMatch() {
+        const name = document.getElementById('match-name').value;
+        const address1 = document.getElementById('match-address').value;
+        const city = document.getElementById('match-city').value;
+        const state = document.getElementById('match-state').value;
+        const country = document.getElementById('match-country').value;
+        const res = await fetch(`${API_BASE}/match?name=${name}&address1=${address1}&city=${city}&state=${state}&country=${country}`);
+        const data = await res.json();
+        document.getElementById('match-results').textContent = JSON.stringify(data, null, 2);
+    }
+</script>
 </body>
 </html>
